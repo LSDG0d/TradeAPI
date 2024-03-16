@@ -17,7 +17,6 @@ namespace TradeAPI
             _bybitClient = new bybitRestClient();
             _bitgetClient = new bitgetRestClient();
             _kucoinClient = new kucoinRestClient();
-
         }
 
         private async void timerUpdate_Tick(object sender, EventArgs e)
@@ -27,17 +26,15 @@ namespace TradeAPI
         private async Task GetPricesAsync()
         {
             var coinPair = comboBoxCoin.Text;
-
+            //Получаем значения сколько бабок уйдёт за монетку
             var binancePrice = await _binanceClient.GetLastPriceAsync(coinPair);
-            labelBinance.Text = $"Binance: {Convert.ToString(binancePrice ?? 0m)}";
-
             var bybitPrice = await _bybitClient.GetLastPriceAsync(coinPair);
-            labelBybit.Text = $"Bybit: {Convert.ToString(bybitPrice ?? 0m)}";
-
             var bitgetPrice = await _bitgetClient.GetLastPriceAsync(coinPair);
-            labelBitget.Text = $"Bitget: {Convert.ToString(bitgetPrice ?? 0m)}";
-
             var kucoinPrice = await _kucoinClient.GetLastPriceAsync(coinPair);
+            //Обновляем тектовые новыми значениями
+            labelBinance.Text = $"Binance: {Convert.ToString(binancePrice ?? 0m)}";
+            labelBybit.Text = $"Bybit: {Convert.ToString(bybitPrice ?? 0m)}";
+            labelBitget.Text = $"Bitget: {Convert.ToString(bitgetPrice ?? 0m)}";
             labelKucoin.Text = $"Kucoin: {Convert.ToString(kucoinPrice ?? 0m)}";
         }
     }
